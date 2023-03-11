@@ -11,6 +11,8 @@
     3. djangorestframework
     4. pytest
     5. pytest-dgango
+    6. black  // use with .vscode settings.json
+    7. flake8 // for formatting and error checkers and code quality to good
 --
         End Installed packages
 ---
@@ -84,3 +86,14 @@
                 python_files = test_*.py
 
 
+9. install black
+    gto to settings in vscode and configure black there:
+        search for python and check for python formatter is black
+
+        create .vsocde directory in the root folder and add setting.json
+                add the settings needed to format our code,, check docs
+
+
+10. install flake8: also for formatting and error checkers
+        edit .vscode setting.json
+        
