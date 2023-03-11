@@ -1,0 +1,86 @@
+////////// google django github///////
+//////// django/core/management/utiliteis.py////// :examples
+/// find useful codes examples ////
+
+
+--
+        Installed packages
+--
+    1. django 
+    2. python-dotenv
+    3. djangorestframework
+    4. pytest
+    5. pytest-dgango
+--
+        End Installed packages
+---
+
+1. create project and to be ready for production later:
+    create in main Project (startproject):
+        a settings folder: /settings
+        then: copy setting.py into /settings ==> /settings/setting.py
+                rename the settings file to base for example: /settings/base.py
+
+        then: in manage.py --> 
+            os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'startproject.settings.base')
+
+            this to let python know where to start
+
+    
+    ////// then::: 
+                here we have the base.py, we create local.py and production.py
+
+                . from base.py we cut the database and paste it in local.py and production.py
+                . and cut to any setting we may need to change in production ( between local and production)
+
+                .. production.py and local.py should start with this line
+                        from .base import *
+
+                        then: all settings ex : (DATABASE ={ ... } and ...)
+
+                ... in manage.py,,, if we are in local we make setting.local
+                ... in production,, settings.production
+
+
+
+2.  step 1 can be replaced with decouple package,, .env 
+        or python-dotenv  ***>> see official docs
+
+3. if we are in production::: DEBUG = False
+        we should add ALLOWED_HOSTS = ['*']  // add the ip of the server and someothers only
+
+
+4. Secret Keys in Setting.py
+    ........ visit django github/  django/core/management/utils.py 
+                    and find may key generators
+    python manage.py shell
+    from django.core.management.utils import get_random_secret_key
+    >>> print(get_random_secret_key())
+    >>> sdfasdfadsfasdfasdfasdf    /// copy the key and add it into the settings/base.py
+
+
+5. pip freeze > requirements.txt   /// later will be one for local and other for production
+
+6. to install directly from requirements.txt:   
+        pip install -r requirements.txt
+
+7.  .env  --> use python-dotenv
+            in settings.py ::
+
+            from dotenv import load_dotenv
+            import os
+
+            load_dotenv()
+            SECRET_KEY = os.environ.get('SECRET_KEY')
+
+
+8. install pytest and pytest-django:
+
+        -create pytest.ini in root folder next to manage.py //read docs
+            in pytest.ini:
+                [pytest]
+                DJANGO_SETTINGS_MODULE = drfecommerce.settings.local
+
+                python_files = test_*.py
+
+
