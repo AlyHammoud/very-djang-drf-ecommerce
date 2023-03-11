@@ -34,10 +34,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party
-    'rest_framework'
+    'rest_framework',
+    'mptt',
+    'drf_spectacular',
 
     # internal apps
+    'product'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -116,6 +120,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# REST_FRAMEWORK = {
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
-# }
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'DRF Ecommerce',
+    'DESCRIPTION': 'Description goes here',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

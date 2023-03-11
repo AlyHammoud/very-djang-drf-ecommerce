@@ -13,6 +13,9 @@
     5. pytest-dgango
     6. black  // use with .vscode settings.json
     7. flake8 // for formatting and error checkers and code quality to good
+    8. django-mptt  // for relational database models
+    9. drf-spectacular // check point 11 // for documentation like swagger
+    10. python manage.py spectacular --file schema.yaml  // to create a file schema for documenting our project
 --
         End Installed packages
 ---
@@ -83,7 +86,9 @@
                 [pytest]
                 DJANGO_SETTINGS_MODULE = drfecommerce.settings.local
 
-                python_files = test_*.py
+                python_files = test_*.py  // this will trigger all test_ANYNAME.py in our project when we run pytest
+
+                - no need for test in applcation,, in main project, every app add a dir for it and make tests there
 
 
 9. install black
@@ -97,3 +102,38 @@
 10. install flake8: also for formatting and error checkers
         edit .vscode setting.json
         
+
+11. pip install drf-spectacular
+        . for documentatoin: follow docs for installing and adding the settings needed
+
+        . every time we edit a url, or view or serializer:
+               >>> python manage.py spectacular --file schema.yaml
+
+                        >this generates and regenaret the schama.yaml which will have our swagger routes and infos
+                        > it will tell us that there is an error for the serializer, check down
+
+                
+                >>> in main project, in urls :
+                        path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+                        path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name="schema")),
+                
+
+                >>> in views.py,, we must tell the spectacular what serializer we are using:
+
+                        > from drf_spectacular.utils import extend_schema
+                                 @extend_schema(responses=CategorySerializer)
+                                 def list(self, request):
+                                        retrun Respons...
+
+
+
+
+12. in urls: use :
+                from rest_framework.routers import DefaultRouter
+
+                routers = DefaultRouter()
+                routers.register(r'category', CategoryViewSet)
+
+                urlpatterns= [
+                        path('', include(routers.urls))
+                ]
